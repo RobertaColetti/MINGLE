@@ -12,7 +12,7 @@
 # 1) strength: edges are computed by the median value of the weights of the links of all the probes related to a given gene;
 #
 # 2) count: edges are computed by counting the number of connection of all the probes related to a given gene. It can be weighted or not. 
-#           If "count" is selected, MINGLE needs as input a list of weights which dimension must match with the number of nodes of the MINGLE network.
+#           If "count" is selected, MINGLE needs as input a vector of weights which dimension must match with the number of nodes of the MINGLE network.
 # In Coletti et al. the MINGLE networks are constituted by the genes associated to the selected CpGs, and the weights the percentages of selected probes.
 # 
 
