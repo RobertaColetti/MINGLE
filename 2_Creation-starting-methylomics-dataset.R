@@ -36,16 +36,16 @@ ex_pairs_Oligo=colnames(Ex_Oligo)[which(Ex_Oligo == 1, arr.ind=T)[, "col"]]
 ex_pairs_Oligo=ex_pairs_Oligo[!duplicated(ex_pairs_Oligo)]
 
 #association of the genes with CpG sites 
-load("~/Multi-omics codes/map-genes-probes-1_1.RData")
+load("~/map-genes-probes.RData")
 starting_probes_GBM=CpG2Gene$CpG[which(CpG2Gene$Gene %in% ex_pairs_GBM)]
 starting_probes_Astro=CpG2Gene$CpG[which(CpG2Gene$Gene %in% ex_pairs_Astro)]
 starting_probes_Oligo=CpG2Gene$CpG[which(CpG2Gene$Gene %in% ex_pairs_Oligo)]
 
 #creating the methylomics starting dataset ----- 
 #load the methylomics dataset (samples classified according to 2021-WHO)
-load("~/Multi-omics codes/dataset/DNAMeth-completeDS.RData")
+load("~/dataset/DNAMeth-completeDS.RData")
 #load the RNASeq dataset (to match samples)
-load("~/Multi-omics codes/dataset/common-normally-distributed-RNAseq-2021class.RData")
+load("~/dataset/RNAseq_data.RData")
 
 gbm_samples=rownames(GBM_RNA)
 oligo_samples=rownames(oligo_RNA)
