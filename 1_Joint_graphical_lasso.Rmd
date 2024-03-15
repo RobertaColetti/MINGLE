@@ -1,0 +1,30 @@
+# Making the variables normal distributed 
+
+---
+title: "Glasso-RNASeq"
+author: "Roberta Coletti"
+date: "28/03/2022"
+---
+#to clean the workspace: rm(list = ls())
+```{r, warning=FALSE}
+library(JGL)
+```
+
+
+# Download and prepare RNASeq data
+```{r}
+load("~/dataset/RNAseq_data.RData")
+#bind together the three glioma-type datasets in a list
+a= list(astro_RNA,oligo_RNA,GBM_RNA)
+```
+
+#JGL
+```{r}
+## run FGL:
+fgl.results = JGL(Y=a, penalty="fused",lambda1=0.9,lambda2=0.001) #choose the desired lambda1 and lambda2 parameters
+#save(fgl.results, file="JGL-lam109-lam20001.RData")  #uncomment this line if you want to save your outcome
+```
+#joint network representation:
+```{r}
+plot.jgl(fgl.results,haslegend = TRUE)
+```

@@ -1,0 +1,109 @@
+# Making the variables normal distributed 
+
+---
+title: "Glasso-DNAMeth"
+author: "Roberta Coletti"
+date: "28/03/2022"
+---
+#to clean the workspace: rm(list = ls())
+```{r, warning=FALSE}
+library(huge)
+library(moments)
+
+```
+
+# load and prepare DNAMeth data
+```{r}
+load("~/dataset/DNAMeth_data-ExEdge_RNAseq.RData")
+```
+#normalize data by npn-normalization:
+
+```{r}
+#change this according to the glioma type:
+# 1-> Atrocytoma, 2-> Oligodendroglioma, 3-> GBM
+GT=3
+
+#transform data to be normally distributed:
+if(GT==1)
+{
+  DS=matrix(0,nrow=dim(astro_DNAMeth)[1],ncol=dim(astro_DNAMeth)[2])
+  DS=huge.npn(astro_DNAMeth,npn.func = "shrinkage")
+}
+if(GT==2)
+{
+  DS=matrix(0,nrow=dim(oligo_DNAMeth)[1],ncol=dim(oligo_DNAMeth)[2])
+  DS=huge.npn(oligo_DNAMeth,npn.func = "shrinkage")
+}
+if(GT==3)
+{
+  DS=matrix(0,nrow=dim(GBM_DNAMeth)[1],ncol=dim(GBM_DNAMeth)[2])
+  DS=huge.npn(GBM_DNAMeth,npn.func = "shrinkage")
+}
+
+```
+
+#Check that all the variables are normally distributed (they are)
+```{r}
+Normality_J=matrix("TRUE")
+for (i in 1:dim(DS)[2])
+ {
+   if (sum(abs(DS[,i]))>0)
+  {
+   j_t=jarque.test(DS[,i])
+  }
+   else 
+    {
+      j_t$p.value=0
+    }
+      if (j_t$p.value>0.05)
+      {
+      Normality_J[i]="TRUE"
+     }else{        
+        Normality_J[i]="FALSE"
+       }
+}
+
+
+normal_distr_indexes_J=which(Normality_J %in% TRUE,dim(Normality_J),arr.ind=T)
+length(normal_distr_indexes_J) ==dim(DS)[2] #it must be TRUE (if not, you should reduce the dataset to only the normally distributed variables before applying glasso)
+```
+
+
+#glasso (though "huge"): -------
+```{r}
+p=dim(DS)[2]
+patient_names=rownames(DS)
+name_meth=colnames(DS)
+
+S=var(DS)
+
+rho=0.85 #choose your regularization parameter 
+
+ti_H=Sys.time()
+B=huge.glasso(
+  S,
+  lambda =rho,
+  lambda.min.ratio = NULL,
+  nlambda = NULL,
+  scr = NULL,
+  cov.output = TRUE,
+  verbose = FALSE)
+tf_H <- Sys.time()
+
+tf_H-ti_H
+
+#construct the network
+Theta=matrix(as.numeric(unlist(B$icov)),nrow=p,ncol=p)
+colnames(Theta)=rownames(Theta)=name_meth
+#remove possible computational errors
+upper_triangular_Theta=Theta-diag(p)*Theta
+upper_triangular_Theta[lower.tri(upper_triangular_Theta)] <- 0
+Theta=upper_triangular_Theta+t(upper_triangular_Theta)
+
+#remove not connected nodes
+Sel_Theta=Theta[apply(Theta, 2, var, na.rm=TRUE) != 0,apply(Theta, 2, var, na.rm=TRUE) != 0]
+selected_meth=colnames(Sel_Theta)
+
+#save(selected_meth,Sel_Theta,file="results_glasso_rho085-meth-GBM.RData") #uncomment this line to save your outcomes
+
+```
