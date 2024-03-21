@@ -75,11 +75,13 @@ MINGLE <- function(net, map, edge.type,weights){
 }
 
 
-#----- library section
+# Required libraries
 library("qgraph")
 library("base")
 
-#script to call the function:
+# ------------- EXAMPLE OF EXECUTION OF MINGLE ----------------- 
+# ----- Script to reproduce the output of Coletti et al. -----
+
 
 #1) Load data:
 #methylomics glasso results (related to GBM):
