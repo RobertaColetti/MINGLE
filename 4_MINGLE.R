@@ -6,7 +6,7 @@
 
 # MINGLE function inputs:
 # net: the underlying network used as reference to compute the edges (methylomics networks in Coletti et al.). Nodes of this network will be referred as "Nodes of underlying layer" (NodesUL)
-# map: the functional link between the NodesUL and the new MINGLE Nodes (map between CpG and genes in Coletti et al.)
+# map: the functional link between the NodesUL and the new MINGLE Nodes (map between CpG and genes in Coletti et al.). Note: order in this map is important: NodesUL must be listed in first column, MINGLE nodes must be in the second column.
 # edge.type: label indenfitying the desired function to compute the edge weights. There are two possibilities:
 # 
 # 1) strength: edges are computed by the median value of the weights of the links of all the probes related to a given gene;
