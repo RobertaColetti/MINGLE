@@ -84,6 +84,8 @@ library("base")
 
 
 #1) Load data:
+#initial GBM DNAMeth dataset: 
+load("~/dataset/DNAMeth_data-ExEdge_RNAseq.RData")
 #methylomics glasso results (related to GBM):
 load("~/Network-discovery-results/results_glasso-rho085-meth-gbm.RData") 
 
@@ -91,7 +93,7 @@ load("~/Network-discovery-results/results_glasso-rho085-meth-gbm.RData")
 load("~/map-genes-probes.RData")
 
 #reduce the map to the starting GBM dataset:
-red.CpG2Gene=CpG2Gene[which(CpG2Gene$CpG %in% colnames(gbm_met_i)),]
+red.CpG2Gene=CpG2Gene[which(CpG2Gene$CpG %in% colnames(GBM_DNAMeth)),]
 associated_genes=red.CpG2Gene$Gene[which(red.CpG2Gene$CpG %in% selected_meth)]
 associated_genes=associated_genes[!duplicated(associated_genes)]
 
