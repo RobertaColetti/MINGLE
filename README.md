@@ -1,5 +1,5 @@
 # MINGLE
-This folder contains codes to reproduce the network-based variable selection process described in doi: [...] (Figure 1) 
+This folder contains codes to reproduce the network-based variable selection process described in doi: 10.1101/2024.03.18.585500 (Figure 1) 
 
 Files are numbered based on the order of execution.
 
