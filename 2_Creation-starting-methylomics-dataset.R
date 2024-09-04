@@ -3,7 +3,7 @@
 #load the desired JGL outcome:
 load("~/Network-discovery-results/JGL-lam109-lam20001.RData")
 
-#separate the three networks (one per each glioma type):
+# --- Matrix preparation: separate the three networks (one per each glioma type):
 Theta_a=fgl.results$theta[[1]]
 Theta_o=fgl.results$theta[[2]]
 Theta_g=fgl.results$theta[[3]]
@@ -17,10 +17,11 @@ Theta_a[Theta_a!=0] <-1
 Theta_o[Theta_o!=0] <-1
 Theta_g[Theta_g!=0] <-1
 
-#detect the exclusive relations removing the ones in Astro and Oligo
+# --- Dimensionality reduction: detect the exclusive relations removing the ones in Astro and Oligo
 Ex_GBM= Theta_g - Theta_a - Theta_o
 Ex_Astro= Theta_a - Theta_g - Theta_o
 Ex_Oligo= Theta_o - Theta_a - Theta_g
+
 #This operation lead to matrices with only 3 possible values:
 # 0 --> No edge in all glioma types OR shared edge with one other type (e.g., Ex_GBM = Theta_g - Theta_a - Theta_o = 0 - 0 - 0 OR 1 - 1 - 0)
 # 1 --> Exclusive edge (the edge only exists in the first matrix: e.g., Ex_GBM = Theta_g - Theta_a - Theta_o = 1 - 0 - 0)
@@ -35,13 +36,12 @@ ex_pairs_Astro=ex_pairs_Astro[!duplicated(ex_pairs_Astro)]
 ex_pairs_Oligo=colnames(Ex_Oligo)[which(Ex_Oligo == 1, arr.ind=T)[, "col"]]
 ex_pairs_Oligo=ex_pairs_Oligo[!duplicated(ex_pairs_Oligo)]
 
-#association of the genes with CpG sites 
+# --- Creation of methylomics starting dataset: association of the genes with CpG sites 
 load("~/map-genes-probes.RData")
 starting_probes_GBM=CpG2Gene$CpG[which(CpG2Gene$Gene %in% ex_pairs_GBM)]
 starting_probes_Astro=CpG2Gene$CpG[which(CpG2Gene$Gene %in% ex_pairs_Astro)]
 starting_probes_Oligo=CpG2Gene$CpG[which(CpG2Gene$Gene %in% ex_pairs_Oligo)]
 
-#creating the methylomics starting dataset ----- 
 #load the methylomics dataset (samples classified according to 2021-WHO)
 load("~/dataset/DNAMeth-completeDS.RData")
 #load the RNASeq dataset (to match samples)
