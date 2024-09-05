@@ -7,14 +7,15 @@
 # MINGLE function inputs:
 # net: the underlying network used as reference to compute the edges (methylomics networks in Coletti et al.). Nodes of this network will be referred as "Nodes of underlying layer" (NodesUL)
 # map: the functional link between the NodesUL -- first column in the map -- and the new MINGLE Nodes -- first column in the map -- (map between CpG and genes in Coletti et al.).
-# edge.type: label indenfitying the desired function to compute the edge weights. There are two possibilities:
+# edge.type: label indenfiying the desired function to compute the edge weights. There are two possibilities:
 # 
 # 1) strength: edges are computed by the median value of the weights of the links of all the probes related to a given gene;
 #
 # 2) count: edges are computed by counting the number of connection of all the probes related to a given gene. It can be weighted or not. 
-#           If "count" is selected, MINGLE needs as input a vector of weights which dimension must match with the number of nodes of the MINGLE network.
+#           If "count" is selected, MINGLE needs as input a vector of weights.
 # In Coletti et al. the MINGLE networks are constituted by the genes associated to the selected CpGs, and the weights the percentages of selected probes.
 # 
+# weights: vector with dimension matching with the number of nodes of the MINGLE network. It is used only if "count" is selected as edge.type. If "strength" is selected, put weight = 1.  
 
 
 MINGLE <- function(net, map, edge.type,weights){
