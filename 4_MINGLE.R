@@ -27,7 +27,7 @@ MINGLE <- function(net, map, edge.type,weights){
   M.nodes=M.nodes[!duplicated(M.nodes)]
   
   #check the input are correct:
-  if(edge.type != "strength" AND edge.type !="count")
+  if(edge.type != "strength" && edge.type !="count")
   {  print("Error! Invalid edge.type.")
     return()
     #geterrmessage()
