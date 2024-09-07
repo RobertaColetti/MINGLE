@@ -1,2 +1,7 @@
 # ---- Data to run the Example 2 of the MINGLE Manual, supplementary file of the paper doi: 10.1101/2024.03.18.585500
 
+Contents of the folder: 
+
+net_transcriptomics.RData : network estimated from transcriptomics data by graphical lasso in previous work (https://doi.org/10.1007/978-3-031-49011-8_20)
+Gene-protein-map.RData : map linking genes and proteins
+net_proteomics.RData : network estimated from proteomics data by graphical lasso in previous work (https://doi.org/10.1007/978-3-031-49011-8_20)
