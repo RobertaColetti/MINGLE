@@ -2,6 +2,7 @@
 
 Contents of the folder: 
 
-net_transcriptomics.RData : network estimated from transcriptomics data by graphical lasso in previous work (https://doi.org/10.1007/978-3-031-49011-8_20)
-Gene-protein-map.RData : map linking genes and proteins
-net_proteomics.RData : network estimated from proteomics data by graphical lasso in previous work (https://doi.org/10.1007/978-3-031-49011-8_20)
+- Example2-ManualMINGLE.R : the code for implementing the Example 2 shared in the MINGLE Manual;
+- net_transcriptomics.RData : network estimated from transcriptomics data by graphical lasso in previous work (https://doi.org/10.1007/978-3-031-49011-8_20);
+- Gene-protein-map.RData : map linking genes and proteins;
+- net_proteomics.RData : network estimated from proteomics data by graphical lasso in previous work (https://doi.org/10.1007/978-3-031-49011-8_20).
